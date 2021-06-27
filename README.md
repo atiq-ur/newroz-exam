@@ -1,6 +1,6 @@
 
 
-## About Laravel
+## About this App
 
 Newroz Job Exam
 
