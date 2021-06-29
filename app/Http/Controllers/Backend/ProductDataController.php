@@ -90,8 +90,15 @@ class ProductDataController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy($product_id, $taste_id,$productData_id)
     {
-        //
+        $this->client->request('POST',
+            'http://127.0.0.1:8001/api/product/'.$product_id.'/tastes/'.$taste_id.'/utilities/'.$productData_id,[
+            'form_params' => [
+                '_method' => 'DELETE'
+            ]
+        ]);
+        toastr()->success('Product Data Deleted', 'Data Delete');
+        return back();
     }
 }
