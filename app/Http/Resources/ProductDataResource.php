@@ -19,7 +19,7 @@ class ProductDataResource extends JsonResource
         $taste = $this->whenLoaded('tastes');
         return [
             'id' => $this->id,
-            //'taste_id' => $this->taste_id,
+            'taste_id' => $this->taste_id,
             'weights' => $this->weights,
             'price' => $this->price,
             'quantity' => $this->quantity,

@@ -15,12 +15,14 @@ class CreateProductDataTable extends Migration
     {
         Schema::create('product_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('taste_id')->constrained();
+            $table->foreignId('taste_id')
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade');;
             $table->integer('weights');
             $table->integer('price');
             $table->integer('quantity');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

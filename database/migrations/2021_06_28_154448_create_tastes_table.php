@@ -15,10 +15,12 @@ class CreateTastesTable extends Migration
     {
         Schema::create('tastes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained();
+            $table->foreignId('product_id')
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->string('taste');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

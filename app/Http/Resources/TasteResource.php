@@ -20,7 +20,7 @@ class TasteResource extends JsonResource
         //$tasted = $this->whenLoaded('taste');
         return [
             'id' => $this->id,
-            //'product_id' => $this->product_id,
+            'product_id' => $this->product_id,
             'taste' => $this->taste,
             'updated_at' => $this->updated_at,
             'created_at' => $this->created_at,

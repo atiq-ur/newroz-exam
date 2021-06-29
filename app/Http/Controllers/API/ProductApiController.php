@@ -46,6 +46,7 @@ class ProductApiController extends BaseController
         $product = Product::create($input);
 
         return $this->sendResponse(new ProductResource($product), 'Data uploaded successfully.');
+
     }
 
 

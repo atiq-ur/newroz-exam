@@ -18,3 +18,5 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 Route::resource('/product', \App\Http\Controllers\API\ProductApiController::class);
+Route::resource('/product.tastes', \App\Http\Controllers\API\TasteApiController::class);
+Route::resource('/product.tastes.utilities', \App\Http\Controllers\API\ProductDataApiController::class);
