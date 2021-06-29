@@ -13,4 +13,11 @@ class Taste extends Model
             'product_id',
             'taste'
         ];
+
+    public function productData(){
+        return $this->hasMany(ProductData::class);
+    }
+    public function products(){
+        return $this->belongsTo(Product::class);
+    }
 }

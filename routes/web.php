@@ -17,3 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/', [\App\Http\Controllers\Backend\PagesController::class, 'index'])->name('admin.index');
+Route::resource('/products', \App\Http\Controllers\Backend\ProductController::class);

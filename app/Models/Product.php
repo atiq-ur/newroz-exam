@@ -13,4 +13,7 @@ class Product extends Model
         [
             'name'
         ];
+    public function tastes(){
+        return $this->hasMany(Taste::class);
+    }
 }

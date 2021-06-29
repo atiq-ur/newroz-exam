@@ -16,4 +16,8 @@ class ProductData extends Model
             'price',
             'quantity',
         ];
+
+    public function tastes(){
+        return $this->belongsTo(Taste::class);
+    }
 }
