@@ -19,25 +19,29 @@
                             <li><a href="index3-horizontalmenu.html">Horizontal Sidebar</a></li>
                         </ul>
                     </li>--}}
-                    {{--<li class="{{ Route::is('admin.category.index') || Route::is('admin.category.edit') ? 'active' : '' }}"><a href="{{ route('admin.category.index') }}"
-                        > <i class="ti-cloud"></i><span>Category</span>
+                    <li class="{{ Route::is('products.index') ? 'active' : '' }}">
+                        <a href="{{ route('products.index') }}"> <i class="ti-cloud"></i><span>Products</span>
                         </a>
-                    </li>--}}
+                    </li>
+                    <li class="{{ Route::is('order.index') ? 'active' : '' }}">
+                        <a href="{{ route('order.index') }}"> <i class="ti-cloud"></i><span>Order Product</span>
+                        </a>
+                    </li>
                    {{-- <li class="{{ Route::is('admin.portfolio.index') || Route::is('admin.portfolio.edit') ? 'active' : '' }}"><a href="{{ route('admin.portfolio.index') }}"
                         > <i class="ti-image"></i><span>Portfolio</span>
                         </a>
                     </li>--}}
-                    <li>
-                        {{--<a href="{{ route('logout') }}"
+                    {{--<li>
+                        --}}{{--<a href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
                             <span>Logout</span>
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
-                        </form>--}}
+                        </form>--}}{{--
                         <a class="dropdown-item" href="#logoutModal" data-toggle="modal" data-target="#logoutModal">Log Out</a>
-                    </li>
+                    </li>--}}
                 </ul>
             </nav>
         </div>

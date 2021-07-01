@@ -20,3 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::resource('/product', \App\Http\Controllers\API\ProductApiController::class);
 Route::resource('/product.tastes', \App\Http\Controllers\API\TasteApiController::class);
 Route::resource('/product.tastes.utilities', \App\Http\Controllers\API\ProductDataApiController::class);
+Route::get('/product/{product}/tastes/{taste}/utilities/{product_data_id}/info/{weights}',
+    [\App\Http\Controllers\API\ProductDataApiController::class, 'product_info'])->name('productInfo');
+Route::get('/product/{product}/tastes/{taste}/utilities/{product_data_id}/updateStock/{qty}',
+    [\App\Http\Controllers\API\ProductDataApiController::class, 'updateStock'])->name('updateStock');

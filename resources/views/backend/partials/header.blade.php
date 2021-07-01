@@ -20,6 +20,9 @@
             <ul class="notification-area pull-right">
                 <li id="full-view"><i class="ti-fullscreen"></i></li>
                 <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                <li>
+                    <a href="{{ route('order.cart.view') }}" class="btn-sm btn-warning">Cart({{ \App\Models\Cart::totalCartItems() }})</a>
+                </li>
                 <li class="dropdown">
                     <i class="ti-bell dropdown-toggle" data-toggle="dropdown">
                         <span>2</span>

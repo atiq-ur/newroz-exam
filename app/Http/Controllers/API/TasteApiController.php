@@ -17,8 +17,8 @@ class TasteApiController extends BaseController
     public function index($id)
     {
         $product = Product::findOrFail($id);
-        //$tastes = Taste::where('product_id', $product->id);
-        $tastes = Taste::with('productdata');
+        $tastes = Taste::where('product_id', $product->id);
+        //$tastes = Taste::with('products');
         //dd($product);
         return $this->sendResponse(TasteResource::collection($tastes->paginate(5)), 'Taste Data retrieved Successfully');
 
@@ -57,6 +57,7 @@ class TasteApiController extends BaseController
         if ($taste->product_id != $product->id){
             abort(404);
         }
+
         return (new TasteResource($taste->loadMissing(['products'])))->response();
 
     }

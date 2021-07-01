@@ -111,4 +111,32 @@ class ProductDataApiController extends BaseController
             return $this->sendResponse(new ProductDataResource($productData), 'Product Data deleted');
         }
     }
+
+    public function product_info(Product $product, Taste $taste, $productData_id, $weights ){
+        $productData = ProductData::find($productData_id);
+        //return $weights;
+
+        if ($taste->id != $productData->taste_id){
+            abort(404);
+        }
+        $QueryInfo = ProductData::where('weights', $weights)->first();
+        return $this->sendResponse(new ProductDataResource($QueryInfo), 'Product Data Query Success');
+    }
+
+    public function updateStock(Product $product, Taste $taste, $productData_id, $qty ){
+
+       //return $qty;
+        $product_data= ProductData::findOrFail($productData_id);
+        if ($product_data->taste_id != $taste->id){
+            abort(404);
+        }
+        if ($taste->product_id != $product->id){
+            abort(404);
+        }
+
+        $updateQty = $product_data->quantity - $qty;
+        $product_data->quantity = $updateQty;
+        $product_data->update();
+        return $this->sendResponse(new ProductDataResource($product_data), 'Stock was updated');
+    }
 }
