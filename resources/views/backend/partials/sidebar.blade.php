@@ -27,6 +27,10 @@
                         <a href="{{ route('order.index') }}"> <i class="ti-cloud"></i><span>Order Product</span>
                         </a>
                     </li>
+                    <li class="{{ Route::is('order.lists') ? 'active' : '' }}">
+                        <a href="{{ route('order.lists') }}"> <i class="ti-paint-roller"></i><span>Manage Orders</span>
+                        </a>
+                    </li>
                    {{-- <li class="{{ Route::is('admin.portfolio.index') || Route::is('admin.portfolio.edit') ? 'active' : '' }}"><a href="{{ route('admin.portfolio.index') }}"
                         > <i class="ti-image"></i><span>Portfolio</span>
                         </a>

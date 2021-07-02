@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartItemRequest;
+use App\Http\Requests\OrderPlaceRequest;
 use App\Mail\InvoiceMail;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Repositories\OrderInterface;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use GuzzleHttp\Client;
@@ -15,54 +17,27 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    protected $client;
-
-    public function __construct(){
-        $this->client = new Client();
+    protected $OrderInterface;
+    public function __construct(OrderInterface $OrderInterface){
+        $this->OrderInterface = $OrderInterface;
     }
-
 
     public function index()
     {
-        $client = new Client();
-        $res = $client->request('GET', 'http://127.0.0.1:8001/api/product');
-        $products =  json_decode($res->getBody()->getContents(), true);
-        //dd($products);
+        $products = $this->OrderInterface->all();
         return view('backend.pages.orders.index', ['products' => $products]);
     }
+
     public function details($name)
     {
-        $client = new Client();
-        $res = $client->request('GET', 'http://127.0.0.1:8001/api/product');
-        $products =  json_decode($res->getBody()->getContents(), true);
-        //dd($products);
-        $product_id = 0;
-        foreach ($products['data'] as $product) {
-            if ($product['name'] == $name){
-                $product_id = $product['id'];
-            }
-        }
-        $product_res = $this->client->request('GET', 'http://127.0.0.1:8001/api/product/'.$product_id);
-        $product = json_decode($product_res->getBody()->getContents(), true);
-        $taste_res = $this->client->request('GET', 'http://127.0.0.1:8001/api/product/'.$product_id.'/tastes');
-        $tastes = json_decode($taste_res->getBody()->getContents(), true);
+        list($product, $tastes) = $this->OrderInterface->details($name);
         return view('backend.pages.orders.product_details',
             ['product' => $product, 'tastes'=>$tastes]);
     }
+
     public function cart(CartItemRequest $request){
-        $pro_id = $request->product_id;
-        $taste_id = $request->taste_id;
-        $product_data_id = $request->product_data_id;
-        $product_res = $this->client->request('GET', 'http://127.0.0.1:8001/api/product/'.$pro_id);
-        $product = json_decode($product_res->getBody()->getContents(), true);
 
-        $taste_res = $this->client->request('GET', 'http://127.0.0.1:8001/api/product/'.$pro_id.'/tastes/'.$taste_id);
-        $taste = json_decode($taste_res->getBody()->getContents(), true);
-
-        $res = $this->client->request('GET', 'http://127.0.0.1:8001/api/product/'.$pro_id.'/tastes/'.$taste_id.'/utilities/'.$product_data_id);
-        $productData = json_decode($res->getBody()->getContents(), true);
-        //dd($productData['data']['id']);
-
+        list($product, $taste, $productData) = $this->OrderInterface->cart($request->all());
 
         if ($productData['data']['quantity'] <= 0){
             toastr()->error('The product is stock out! please try another one');
@@ -71,7 +46,6 @@ class OrderController extends Controller
             toastr()->error('The quantity should not greater than stock');
             return back();
         }else {
-            //Cart::create($request->validated());
             $cart = new Cart();
             $cart->product_id = $request->product_id;
             $cart->taste_id = $request->taste_id;
@@ -83,70 +57,56 @@ class OrderController extends Controller
             $cart->price = $productData['data']['price'];
             $cart->ip_address = $request->ip();
             $cart->save();
-            //dd($request->product_id);
             toastr()->success('The product added to cart');
             return back();
         }
-
-
-        /*return view('backend.pages.products.product_data.index',
-            ['product' => $product, 'productData' => $productData, 'taste'=> $taste]);*/
     }
+
     public function cartView(){
-        $carts = Cart::where('ip_address', request()->ip())->get();
+        $carts = $this->OrderInterface->cartView();
         return view('backend.pages.orders.cartView', ['carts' => $carts]);
     }
-    public function place_order(Request $request){
+    public function place_order(OrderPlaceRequest $request){
         $request->validate([
             'name' => 'required',
             'email' => 'required',
             'mobile_number' => 'required',
             'address' => 'required',
         ]);
-        $carts = Cart::where('ip_address', request()->ip())->get();
-        $orderId = random_int(100000, 999999);
-        $order = new Order();
-        $order->order_id = $orderId;
-        $order->customer_name = $request->name;
-        $order->delivery_area = $request->delivery_area;
-        $order->customer_email = $request->email;
-        $order->customer_mobile_no = $request->mobile_number;
-        $order->customer_delivery_address = $request->address;
-        $order->ip_address = $request->ip();
-        $order->save();
-
-        foreach ($carts as $cart){
-            $order_product = new OrderProduct();
-            $order_product->order_id = $order->id;
-            $order_product->product_name = $cart->product_name;
-            $order_product->taste_name = $cart->taste;
-            $order_product->weights = $cart->weights;
-            $order_product->quantity = $cart->quantity;
-            $order_product->unit_price = $cart->price;
-            $order_product->save();
-
-            /* Update the stock*/
-            $this->client->request('GET',
-                'http://127.0.0.1:8001/api/product/'.$cart->product_id.'
-                /tastes/'.$cart->taste_id.'/utilities/'.$cart->product_data_id.'/updateStock/'.$cart->quantity);
-            /*End Update the stock*/
-            $cart->delete();
-        }
-        $this->invoice();
+        $this->OrderInterface->place_order($request->all());
         toastr()->success('Wait for confirmation', 'Order placed');
         return view('backend.pages.orders.success');
+    }
 
+    // Managing Order
+    public function orderLists(){
+        $orderLists = $this->OrderInterface->orderLists();
+        return view('backend.pages.manage_orders.order_lists', compact('orderLists'));
     }
-    public function invoice(){
-        $order = Order::where('ip_address', request()->ip())->first();
-        //dd($order->delivery_area);
-        $order_products = OrderProduct::where('order_id', $order->id)->get();
-        $pdf = PDF::loadView('backend.pages.orders.invoice', compact('order', 'order_products'))
-            ->save(public_path('backend/orders/invoices/'.$order->order_id.'.pdf'));
-        Mail::to($order->customer_email)->send(new InvoiceMail($order));
-        //return $pdf->download($order->order_id.'.pdf');
-        //return $pdf->stream($order->order_id.'.pdf');
-        //return true;
-        //return view('backend.pages.orders.invoice', compact('order', 'order_products'));
+
+    public function orderView(Order $order){
+        $order = $this->OrderInterface->orderView($order);
+        return view('backend.pages.manage_orders.order_view', ['order' => $order]);
     }
+    public function orderConfirm($order_id){
+        $this->OrderInterface->orderConfirm($order_id);
+        toastr()->success('Order is Confirmed', 'Order Confirmation');
+        return back();
+    }
+    public function orderCancel($order_id){
+        $this->OrderInterface->orderCancel($order_id);
+        toastr()->success('Order is Canceled', 'Order Cancellation');
+        return back();
+    }
+    public function isDelivered($order_id){
+        $this->OrderInterface->isDelivered($order_id);
+        toastr()->success('Order is delivered', 'Order Delivered');
+        return back();
+    }
+    public function destroyOrder($order_id){
+        $this->OrderInterface->destroyOrder($order_id);
+        toastr()->success('Order is deleted', 'Order Delete');
+        return back();
+    }
+
 }

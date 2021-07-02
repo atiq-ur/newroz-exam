@@ -139,4 +139,23 @@ class ProductDataApiController extends BaseController
         $product_data->update();
         return $this->sendResponse(new ProductDataResource($product_data), 'Stock was updated');
     }
+
+    public function revertBackToStock(Product $product, Taste $taste, $data_id, $qty ){
+
+        //$productData= ProductData::findOrFail(4);
+        //return $data_id;
+        $pro = ProductData::findOrFail($data_id);
+        //return $pro->weights;
+        if ($pro->taste_id != $taste->id){
+            abort(404);
+        }
+        if ($taste->product_id != $product->id){
+            abort(404);
+        }
+
+        $updateQty = $pro->quantity + $qty;
+        $pro->quantity = $updateQty;
+        $pro->update();
+        return $this->sendResponse(new ProductDataResource($pro), 'Stock was updated');
+    }
 }

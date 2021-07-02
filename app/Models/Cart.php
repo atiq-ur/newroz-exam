@@ -15,6 +15,7 @@ class Cart extends Model
             'weights',
             'quantity',
             'price',
+            'ip_address'
         ];
 
     public static function totalCartItems(){

@@ -24,3 +24,6 @@ Route::get('/product/{product}/tastes/{taste}/utilities/{product_data_id}/info/{
     [\App\Http\Controllers\API\ProductDataApiController::class, 'product_info'])->name('productInfo');
 Route::get('/product/{product}/tastes/{taste}/utilities/{product_data_id}/updateStock/{qty}',
     [\App\Http\Controllers\API\ProductDataApiController::class, 'updateStock'])->name('updateStock');
+
+Route::get('/product/{product}/tastes/{taste}/utilities/{product_data_id}/back-to-inventory/{qty}',
+    [\App\Http\Controllers\API\ProductDataApiController::class, 'revertBackToStock'])->name('revertBackToStock');
