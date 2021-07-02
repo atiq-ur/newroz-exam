@@ -88,7 +88,7 @@
                         </div>
 
                         <div class="text-left">
-                            <a href="#" class="btn btn-success">print invoice</a>
+                            <a href="{{ route('order.getInvoice', $order->id) }}" class="btn btn-success">print invoice</a>
                         </div>
                         <div class="text-right">
                             @if($order->order_status == 0)

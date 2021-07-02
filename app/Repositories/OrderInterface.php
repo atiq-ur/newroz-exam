@@ -16,5 +16,6 @@ interface OrderInterface {
     public function orderCancel($order_id);
     public function isDelivered($order_id);
     public function destroyOrder($order_id);
+    public function getInvoice($order_id);
 
 }

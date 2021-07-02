@@ -34,3 +34,4 @@ Route::put('/manage-orders/confirm/{order_id}', [\App\Http\Controllers\Backend\O
 Route::put('/manage-orders/cancel/{order_id}', [\App\Http\Controllers\Backend\OrderController::class, 'orderCancel'])->name('order.cancel');
 Route::put('/manage-orders/isDelivered/{order_id}', [\App\Http\Controllers\Backend\OrderController::class, 'isDelivered'])->name('order.isDelivered');
 Route::get('/manage-orders/delete/{order_id}', [\App\Http\Controllers\Backend\OrderController::class, 'destroyOrder'])->name('order.destroy');
+Route::get('/manage-orders/get-invoice/{order_id}', [\App\Http\Controllers\Backend\OrderController::class, 'getInvoice'])->name('order.getInvoice');

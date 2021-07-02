@@ -5,7 +5,9 @@ use App\Mail\InvoiceMail;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Response;
 use PDF;
 
 class OrderRepository implements OrderInterface
@@ -156,5 +158,8 @@ class OrderRepository implements OrderInterface
     {
         $order = Order::findOrFail($order_id);
         $order->delete();
+    }
+    public function getInvoice($order_id){
+        return Order::findOrFail($order_id);
     }
 }

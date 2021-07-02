@@ -108,5 +108,9 @@ class OrderController extends Controller
         toastr()->success('Order is deleted', 'Order Delete');
         return back();
     }
+    public function getInvoice($order_id){
+        $order = $this->OrderInterface->getInvoice($order_id);
+        return view('backend.pages.manage_orders.invoice', compact('order'));
+    }
 
 }
