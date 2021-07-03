@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "0b6cd931-43bb-4e10-a5bd-125ce1a9b56f",
+		"name": "Offer Collection",
+		"description": "# Offer Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sore Offer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/offers?name=New Year Offer&minimum_order_quantity=5&start_time=2021-07-03 20:53:50&end_time=2021-07-03 21:53:50",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"offers"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "New Year Offer"
+						},
+						{
+							"key": "minimum_order_quantity",
+							"value": "5"
+						},
+						{
+							"key": "start_time",
+							"value": "2021-07-03 20:53:50"
+						},
+						{
+							"key": "end_time",
+							"value": "2021-07-03 21:53:50"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Offers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/offers",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"offers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Offer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/offers/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"offers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Offer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/offers/1?name=Updated Offer&minimum_order_quantity=4&start_time=2021-07-03 20:53:50&end_time=2021-07-03 20:53:59&fixed_amount=50&percentage=23",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"offers",
+						"1"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Updated Offer"
+						},
+						{
+							"key": "minimum_order_quantity",
+							"value": "4"
+						},
+						{
+							"key": "start_time",
+							"value": "2021-07-03 20:53:50"
+						},
+						{
+							"key": "end_time",
+							"value": "2021-07-03 20:53:59"
+						},
+						{
+							"key": "fixed_amount",
+							"value": "50"
+						},
+						{
+							"key": "percentage",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Offer",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/offers/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"offers",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status Change",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/offer/change-status/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"offer",
+						"change-status",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
