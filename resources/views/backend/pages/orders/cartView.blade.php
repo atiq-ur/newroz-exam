@@ -67,6 +67,12 @@
                     <div class="col-md-12">
                         <form action="{{ route('order.place.confirm') }}" method="POST">
                             @csrf
+                            @if(\App\Models\Cart::isPreOrder())
+                                <input type="hidden" name="isPreOrder" value="1"/>
+                            @else
+                                <input type="hidden" name="isPreOrder" value="0"/>
+                            @endif
+                            <li>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-row">

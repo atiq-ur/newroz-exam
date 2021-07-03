@@ -31,6 +31,15 @@
                         <a href="{{ route('order.lists') }}"> <i class="ti-paint-roller"></i><span>Manage Orders</span>
                         </a>
                     </li>
+
+                    <li class="{{ Route::is('preOrder.index') ? 'active' : '' }}">
+                        <a href="{{ route('preOrder.offers.index') }}"> <i class="ti-paint-roller"></i><span>Manage Offers</span>
+                        </a>
+                    </li>
+                    <li class="{{ Route::is('preOrder.orders.index') ? 'active' : '' }}">
+                        <a href="{{ route('preOrder.orders.index') }}"> <i class="ti-paint-bucket"></i><span>Pre Order</span>
+                        </a>
+                    </li>
                    {{-- <li class="{{ Route::is('admin.portfolio.index') || Route::is('admin.portfolio.edit') ? 'active' : '' }}"><a href="{{ route('admin.portfolio.index') }}"
                         > <i class="ti-image"></i><span>Portfolio</span>
                         </a>

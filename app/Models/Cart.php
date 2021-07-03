@@ -22,4 +22,7 @@ class Cart extends Model
         $carts = Cart::where('ip_address', request()->ip())->get();
         return count($carts);
     }
+    public static function isPreOrder(){
+        return Cart::where('isPreOrder', 1)->first();
+    }
 }

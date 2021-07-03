@@ -3,83 +3,96 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OfferResource;
+use App\Models\Offer;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Validator;
 
-class OfferApiController extends Controller
+class OfferApiController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $offers = Offer::all();
+        return $this->sendResponse(OfferResource::collection($offers), 'Offer Data retrieved Successfully');
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'name' => 'required',
+            'minimum_order_quantity' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+
+        ]);
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+        //return $request->all();
+
+       $offer = Offer::create($input);
+
+        return $this->sendResponse(new OfferResource($offer), 'Added a new Offer successfully.');
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $offer = Offer::findOrFail($id);
+        //return 1;
+        return $this->sendResponse(new OfferResource($offer), 'Data retrieved Successfully');
+        //return $this->sendResponse( OfferResource::collection($offer), 'Offer Data retrieved Successfully');
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Offer $offer)
     {
-        //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'name' => 'required',
+            'minimum_order_quantity' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+        ]);
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+        $offer->update($input);
+        return $this->sendResponse(new OfferResource($offer), 'Product Data updated successfully.');
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Offer $offer)
     {
-        //
+        $offer->delete();
+        return $this->sendResponse(new OfferResource($offer), 'Offer deleted Successfully.');
+    }
+
+    public function updateStatus(Offer $offer){
+        if ($offer->isActive){
+            $offer->isActive = 0;
+        }else{
+            $offer->isActive = 1;
+        }
+        $offer->update();
+        //return 1;
+        return $this->sendResponse(new OfferResource($offer), 'Offer Status Updated Successfully.');
     }
 }

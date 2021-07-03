@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Manage Products
 Route::get('/', [\App\Http\Controllers\Backend\PagesController::class, 'index'])->name('admin.index');
 Route::resource('/products', \App\Http\Controllers\Backend\ProductController::class);
 Route::resource('/products.tastes', \App\Http\Controllers\Backend\TasteController::class);
 Route::resource('/products.tastes.utilities', \App\Http\Controllers\Backend\ProductDataController::class);
+
+//Order Products
 Route::get('/orders/products', [\App\Http\Controllers\Backend\OrderController::class, 'index'])->name('order.index');
 Route::get('/orders/{name}', [\App\Http\Controllers\Backend\OrderController::class, 'details'])->name('order.details');
 Route::post('/orders/product/taste/utilities/cart', [\App\Http\Controllers\Backend\OrderController::class, 'cart'])->name('order.cart');
@@ -35,3 +35,17 @@ Route::put('/manage-orders/cancel/{order_id}', [\App\Http\Controllers\Backend\Or
 Route::put('/manage-orders/isDelivered/{order_id}', [\App\Http\Controllers\Backend\OrderController::class, 'isDelivered'])->name('order.isDelivered');
 Route::get('/manage-orders/delete/{order_id}', [\App\Http\Controllers\Backend\OrderController::class, 'destroyOrder'])->name('order.destroy');
 Route::get('/manage-orders/get-invoice/{order_id}', [\App\Http\Controllers\Backend\OrderController::class, 'getInvoice'])->name('order.getInvoice');
+
+//Manage Offers
+Route::resource('/offers', \App\Http\Controllers\Backend\OfferController::class);
+Route::get('/offers/change-status/{offer}', [\App\Http\Controllers\Backend\OfferController::class, 'updateStatus'])->name('offer.change_status');
+Route::group([ 'as' => 'preOrder.'], function (){
+    Route::resource('/offers', \App\Http\Controllers\Backend\OfferController::class);
+    Route::group(['prefix'=>'preOrder'], function (){
+        Route::resource('/orders', \App\Http\Controllers\Backend\PreOrderController::class);
+    });
+});
+Route::get('pre-order/orders/{name}', [\App\Http\Controllers\Backend\PreOrderController::class, 'proDetails'])->name('preOrder.orders.detail');
+Route::post('pre-order/orders/cart', [\App\Http\Controllers\Backend\PreOrderController::class, 'preOrderCart'])->name('preOrder.orders.cart');
+Route::post('pre-order/orders/cart-view', [\App\Http\Controllers\Backend\PreOrderController::class, 'preOrderCartView'])->name('preOrder.orders.preOrderCartView');
+

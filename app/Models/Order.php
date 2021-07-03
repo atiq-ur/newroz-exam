@@ -17,7 +17,8 @@ class Order extends Model
             'customer_delivery_address',
             'used_coupon',
             'delivery_area',
-            'ip_address'
+            'ip_address',
+            'isPreOrder',
         ];
     public function orderedProducts(){
         return $this->hasMany(OrderProduct::class);

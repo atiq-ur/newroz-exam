@@ -97,6 +97,7 @@ class ProductDataApiController extends BaseController
         }
         $product_data->update($input);
         return $this->sendResponse(new ProductDataResource($product_data), 'Product Data updated successfully.');
+
     }
 
 

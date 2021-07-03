@@ -11,10 +11,7 @@
             <div class="col-12 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title float-left">Ordered Lists</h4>
-                        <p class="float-right mb-2">
-                            <a class="btn btn-primary text-white" href="#bd-example-modal-lg" data-toggle="modal" data-target=".bd-example-modal-lg">Add New</a>
-                        </p>
+                        <h4 class="header-title float-left">Ordered Lists - {{ $orderLists->count() }}</h4>
                         <div class="data-tables datatable-primary">
                             <table id="dataTable2" class="text-center">
                                 <thead class="text-capitalize">
@@ -23,6 +20,7 @@
                                     <th width="10%">Order ID</th>
                                     <th width="15%">Customer Name</th>
                                     <th width="25%">Order Status</th>
+                                    <th width="25%">Order Type</th>
                                     <th width="15%">Actions</th>
                                 </tr>
                                 </thead>
@@ -47,6 +45,14 @@
                                                 <button type="button" class="btn btn-sm btn-primary" disabled>Cancelled</button>
                                                 <button type="button" class="btn btn-sm btn-danger" disabled>Cancelled Deliver</button>
                                             @endif
+                                        </td>
+                                        <td>
+                                            @if($order->isPreOrder)
+                                                Pre-Order
+                                            @else
+                                                Simple
+                                            @endif
+
                                         </td>
                                         <td>
                                             <a class="btn text-dark" href="{{ route('order.view', $order) }}"><i class="ti-eye"></i></a>

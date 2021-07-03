@@ -27,3 +27,7 @@ Route::get('/product/{product}/tastes/{taste}/utilities/{product_data_id}/update
 
 Route::get('/product/{product}/tastes/{taste}/utilities/{product_data_id}/back-to-inventory/{qty}',
     [\App\Http\Controllers\API\ProductDataApiController::class, 'revertBackToStock'])->name('revertBackToStock');
+
+//Offer Resource
+Route::resource('/offers', \App\Http\Controllers\API\OfferApiController::class);
+Route::get('/offer/change-status/{offer}', [\App\Http\Controllers\API\OfferApiController::class, 'updateStatus']);

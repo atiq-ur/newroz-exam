@@ -5,15 +5,10 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartItemRequest;
 use App\Http\Requests\OrderPlaceRequest;
-use App\Mail\InvoiceMail;
 use App\Models\Cart;
 use App\Models\Order;
-use App\Models\OrderProduct;
 use App\Repositories\OrderInterface;
-use Illuminate\Support\Facades\Mail;
 use PDF;
-use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -39,7 +34,7 @@ class OrderController extends Controller
 
         list($product, $taste, $productData) = $this->OrderInterface->cart($request->all());
 
-        if ($productData['data']['quantity'] <= 0){
+        if ($productData['data']['quantity'] <= 0 && $request->is_preOrder != 1){
             toastr()->error('The product is stock out! please try another one');
             return back();
         }else if ($request->quantity > $productData['data']['quantity']){
@@ -67,6 +62,7 @@ class OrderController extends Controller
         return view('backend.pages.orders.cartView', ['carts' => $carts]);
     }
     public function place_order(OrderPlaceRequest $request){
+        //dd($request->all());
         $request->validate([
             'name' => 'required',
             'email' => 'required',
@@ -98,12 +94,14 @@ class OrderController extends Controller
         toastr()->success('Order is Canceled', 'Order Cancellation');
         return back();
     }
-    public function isDelivered($order_id){
+    public function isDelivered($order_id): \Illuminate\Http\RedirectResponse
+    {
         $this->OrderInterface->isDelivered($order_id);
         toastr()->success('Order is delivered', 'Order Delivered');
         return back();
     }
-    public function destroyOrder($order_id){
+    public function destroyOrder($order_id): \Illuminate\Http\RedirectResponse
+    {
         $this->OrderInterface->destroyOrder($order_id);
         toastr()->success('Order is deleted', 'Order Delete');
         return back();

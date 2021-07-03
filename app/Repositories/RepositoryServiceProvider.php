@@ -12,6 +12,8 @@ class RepositoryServiceProvider extends ServiceProvider{
     public function register()
     {
         $this->app->bind(OrderInterface::class, OrderRepository::class);
+        $this->app->bind(OfferInterface::class, OfferRepository::class);
+        $this->app->bind(PreOrderInterface::class, PreOrderRepository::class);
     }
 
     /**

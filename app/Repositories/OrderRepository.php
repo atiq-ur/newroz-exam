@@ -1,13 +1,13 @@
 <?php
 namespace App\Repositories;
 use App\Helpers\APIHandler;
+use App\Helpers\OfferAPIHandler;
 use App\Mail\InvoiceMail;
+use App\Mail\PreOrderInvoiceMail;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Response;
 use PDF;
 
 class OrderRepository implements OrderInterface
@@ -56,19 +56,10 @@ class OrderRepository implements OrderInterface
 
     public function place_order(array $data)
     {
-
-        /*$order = new Order();
-        $order->order_id = random_int(100000, 999999);
-        $order->customer_name = $data['name'];
-        $order->delivery_area = $data['delivery_area'];
-        $order->customer_email = $data['email'];
-        $order->customer_mobile_no = $data['mobile_number'];
-        $order->customer_delivery_address =  $data['address'];
-        $order->ip_address = request()->ip();
-        $order->save()->$data->validated();*/
         $orderUniqueId = random_int(100000, 999999);
         $order = Order::create([
             'order_id' =>  $orderUniqueId,
+            'isPreOrder' => $data['isPreOrder'],
             'customer_name' => $data['name'],
             'delivery_area' => $data['delivery_area'],
             'customer_email' => $data['email'],
@@ -78,14 +69,7 @@ class OrderRepository implements OrderInterface
         ]);
 
         foreach ($this->cartView() as $cart){
-            /*$order_product = new OrderProduct();
-            $order_product->order_id = $order->id;
-            $order_product->product_name = $cart->product_name;
-            $order_product->taste_name = $cart->taste;
-            $order_product->weights = $cart->weights;
-            $order_product->quantity = $cart->quantity;
-            $order_product->unit_price = $cart->price;
-            $order_product->save()->$request->validated();*/
+
             OrderProduct::create([
                 'order_id' => $order->id,
                 'product_id' => $cart->product_id,
@@ -110,7 +94,11 @@ class OrderRepository implements OrderInterface
         $order_products = OrderProduct::where('order_id', $order->id)->get();
         PDF::loadView('backend.pages.orders.invoice', compact('order', 'order_products'))
             ->save(public_path('backend/orders/invoices/'.$order->order_id.'.pdf'));
-        Mail::to($order->customer_email)->send(new InvoiceMail($order));
+        if ($order->isPreOrder == 1){
+            Mail::to($order->customer_email)->send(new PreOrderInvoiceMail($order));
+        }else{
+            Mail::to($order->customer_email)->send(new InvoiceMail($order));
+        }
     }
 
 
