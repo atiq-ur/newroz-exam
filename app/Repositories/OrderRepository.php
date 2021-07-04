@@ -80,6 +80,7 @@ class OrderRepository implements OrderInterface
                 'weights' => $cart->weights,
                 'unit_price' => $cart->price,
                 'quantity' => $cart->quantity,
+                'ip_address' => \request()->ip(),
             ]);
 
             // Update the stock
@@ -89,6 +90,7 @@ class OrderRepository implements OrderInterface
         }
         $this->invoice();
     }
+
     public function invoice(){
         $order = Order::where('ip_address', \request()->ip())->first();
         $order_products = OrderProduct::where('order_id', $order->id)->get();

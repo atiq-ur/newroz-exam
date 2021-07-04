@@ -47,6 +47,8 @@
             </div>
 
         </div>
+        @include('backend.pages.orders.partials.similar_products')
+
     </div>
 @endsection
 
