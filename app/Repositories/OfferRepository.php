@@ -45,4 +45,9 @@ class OfferRepository implements OfferInterface
     {
         $this->offer->updateStatus($id);
     }
+
+    public function getCurrentOffer()
+    {
+        return $this->offer->getCurrentOffer();
+    }
 }

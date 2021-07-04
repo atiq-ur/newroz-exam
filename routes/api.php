@@ -30,4 +30,5 @@ Route::get('/product/{product}/tastes/{taste}/utilities/{product_data_id}/back-t
 
 //Offer Resource
 Route::resource('/offers', \App\Http\Controllers\API\OfferApiController::class);
+Route::get('/offer/current-offer', [\App\Http\Controllers\API\OfferApiController::class, 'isOffer']);
 Route::get('/offer/change-status/{offer}', [\App\Http\Controllers\API\OfferApiController::class, 'updateStatus']);

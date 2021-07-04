@@ -11,7 +11,7 @@ class PreOrderRepository implements PreOrderInterface
     }
     public function all()
     {
-        return $this->preOrder->getAllProducts();
+        return [$this->preOrder->getAllProducts(), $this->preOrder->getCurrentOffer()];
     }
 
     public function productDetails($name): array
@@ -40,5 +40,10 @@ class PreOrderRepository implements PreOrderInterface
         $productData = $this->preOrder->getProductDataSingle($pro_id, $taste_id, $product_data_id);
 
         return [$product, $taste, $productData];
+    }
+
+    public function getCurrentOffer()
+    {
+        // TODO: Implement getCurrentOffer() method.
     }
 }

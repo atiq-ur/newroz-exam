@@ -55,4 +55,5 @@ class OfferAPIHandler
     public function updateStatus($id){
         $this->client->request('GET', 'http://127.0.0.1:8001/api/offer/change-status/'.$id);
     }
+
 }

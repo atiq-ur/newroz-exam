@@ -9,4 +9,5 @@ interface OfferInterface {
    public function destroy($id);
    public function updateStatus($id);
 
+
 }

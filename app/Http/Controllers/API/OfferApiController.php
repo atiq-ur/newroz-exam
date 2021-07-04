@@ -85,11 +85,26 @@ class OfferApiController extends BaseController
         return $this->sendResponse(new OfferResource($offer), 'Offer deleted Successfully.');
     }
 
+    public function isOffer(){
+        $offer = Offer::where('isActive', 1)->first();
+        if (!$offer){
+            return $this->sendError('Currently we have no offer');
+        }else{
+            return $this->sendResponse(new OfferResource($offer), 'Data retrieved Successfully');
+        }
+
+    }
+
     public function updateStatus(Offer $offer){
         if ($offer->isActive){
             $offer->isActive = 0;
         }else{
-            $offer->isActive = 1;
+            $existsOffer = Offer::where('isActive', 1)->first();
+            if ($existsOffer){
+                return $this->sendError('Already a offer Activated. First de-active it', 500);
+            }else{
+                $offer->isActive = 1;
+            }
         }
         $offer->update();
         //return 1;

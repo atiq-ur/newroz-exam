@@ -15,6 +15,14 @@
                         <p class="text-sm-center">**You can order even stock out Products.
                             We will notify when products wil be in stock. </p>
                     </div>
+                    <hr>
+                    <div class="card-title">
+                        <h3 class="text-sm-center">Current Offer -{{ $currentOffer['data']['name'] }}</h3>
+                        <p class="text-sm-center">**You can get
+                            {{ $currentOffer['data']['fixed_amount'] == null ? $currentOffer['data']['percentage'] .'%'
+                                    : $currentOffer['data']['fixed_amount'].' Taka'}} if you buy at least
+                            {{ $currentOffer['data']['minimum_order_quantity'] }} products as a pre-order. **</p>
+                    </div>
                 </div>
             </div>
         </div>

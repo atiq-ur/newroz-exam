@@ -21,9 +21,10 @@ class PreOrderController extends Controller
 
     public function index()
     {
-        $preOrderProducts = $this->preOrderInterface->all();
+
+        list($preOrderProducts, $currentOffer) = $this->preOrderInterface->all();
         return view('backend.pages.preOrders.index',
-            ['preOrderProducts' => $preOrderProducts]);
+            ['preOrderProducts' => $preOrderProducts, 'currentOffer'=> $currentOffer]);
     }
 
     public function proDetails($name){
