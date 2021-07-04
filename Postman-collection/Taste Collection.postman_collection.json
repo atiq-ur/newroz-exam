@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "a29327c7-7e2b-4eeb-b14f-f757c34f0f5f",
+		"name": "Taste Collection",
+		"description": "#Taste Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Tastes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Store Taste",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes?taste=mixed",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes"
+					],
+					"query": [
+						{
+							"key": "taste",
+							"value": "mixed"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Taste",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes/6",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Taste",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes/6?taste=mixed updated",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes",
+						"6"
+					],
+					"query": [
+						{
+							"key": "taste",
+							"value": "mixed updated"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Tastes",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes/6",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

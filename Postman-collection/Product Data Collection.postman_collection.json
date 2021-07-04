@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "96b8d7a8-2db4-48e7-b0eb-40862f318dc2",
+		"name": "Product Data Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Revert Back to Stock After Order Cancelation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes/6/utilities/6/back-to-inventory/100",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes",
+						"6",
+						"utilities",
+						"6",
+						"back-to-inventory",
+						"100"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product Data All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes/5/utilities",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes",
+						"5",
+						"utilities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes/5/utilities?weights=250&price=710&quantity=210",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes",
+						"5",
+						"utilities"
+					],
+					"query": [
+						{
+							"key": "weights",
+							"value": "250"
+						},
+						{
+							"key": "price",
+							"value": "710"
+						},
+						{
+							"key": "quantity",
+							"value": "210"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Single Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes/5/utilities/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes",
+						"5",
+						"utilities",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product Data",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes/5/utilities/5?weights=150&price=100&quantity=100",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes",
+						"5",
+						"utilities",
+						"5"
+					],
+					"query": [
+						{
+							"key": "weights",
+							"value": "150"
+						},
+						{
+							"key": "price",
+							"value": "100"
+						},
+						{
+							"key": "quantity",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Stcok",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8001/api/product/3/tastes/5/utilities/5/updateStock/10",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"product",
+						"3",
+						"tastes",
+						"5",
+						"utilities",
+						"5",
+						"updateStock",
+						"10"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
